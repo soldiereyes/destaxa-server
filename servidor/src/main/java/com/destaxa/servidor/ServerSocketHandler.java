@@ -47,6 +47,12 @@ public class ServerSocketHandler {
                 logger.info("Transaction declined: Negative value. NSU: {}", requestMessage.getField(11));
             } else if (Double.parseDouble(value) > 1000) {
                 logger.warn("Transaction timeout simulated for value > 1000. NSU: {}", requestMessage.getField(11));
+                try {
+                    Thread.sleep(30000);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
+
                 return;
             } else {
                 responseMessage.setField(39, "000");
